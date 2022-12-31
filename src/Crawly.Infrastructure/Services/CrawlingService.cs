@@ -11,24 +11,31 @@ namespace Crawly.Infrastructure.Services
         private readonly CrawlingOptions _crawlingOptions;
         private readonly Website _website;
 
+        private readonly IFileService fileService;
+
         public CrawlingService(string url, CrawlingOptions crawlingOptions)
         {
             this._crawlingOptions = crawlingOptions;
             this._website = new Website(url);
-            this._website.AddPageReference(url, crawlingOptions.Location);
+
+            this.fileService = new FileService();
         }
 
-        public void CrawlWebsite()
+        public void StartCrawling()
+        {
+            this._website.AddPageReference(this._website.Uri.AbsoluteUri, this._crawlingOptions.Location);
+
+            this.CrawlPage();
+            this.SaveFiles();
+        }
+
+        private void CrawlPage()
         {
             for (int i = 0; i < this._website.Pages.Count; i++)
             {
                 var currentPage = this._website.Pages[i];
-                var htmlDoucment = LoadHtmlDocumentByUrl(currentPage.Uri.AbsoluteUri);
-
-                if (this._crawlingOptions.DownloadHtml)
-                {
-                    SaveHtmlDocument(htmlDoucment, currentPage.FullPath);
-                }
+                var htmlDoucment = HtmlAgilityPackExtension.LoadHtmlDocumentByUrl(currentPage.Uri.AbsoluteUri);
+                currentPage.Html = htmlDoucment.ToString();
 
                 if (this._crawlingOptions.CrawlImages)
                 {
@@ -45,28 +52,29 @@ namespace Crawly.Infrastructure.Services
                     this.AddReferencesRecursivly(htmlDoucment);
                 }
             }
+        }
 
-            // TODO: Refactor
+        private void SaveFiles()
+        {
+            if (this._crawlingOptions.DownloadHtml)
+            {
+                this.SaveHtmlFiles();
+            }
+
             if (this._crawlingOptions.DownloadImages)
             {
-                foreach(var imageReference in this._website.ImageReferences)
-                {
-                    this.DowloadFile(imageReference, "image");
-                }
+                this.DowloadImages();
             }
 
             if (this._crawlingOptions.DowloadStylesheets)
             {
-                foreach (var imageReference in this._website.StylesheetReferences)
-                {
-                    this.DowloadFile(imageReference, "css");
-                }
+                this.DowloadStylesheets();
             }
         }
 
         private void AddReferencesRecursivly(HtmlDocument htmlDoucment)
         {
-            foreach (var pageReference in GetPageReferences(htmlDoucment))
+            foreach (var pageReference in HtmlAgilityPackExtension.GetPageReferences(htmlDoucment))
             {
                 this._website.AddPageReference(pageReference, this._crawlingOptions.Location);
             }
@@ -74,7 +82,7 @@ namespace Crawly.Infrastructure.Services
 
         private void AddImageReferences(HtmlDocument htmlDoucment)
         {
-            foreach (var imageReference in GetImageReferences(htmlDoucment))
+            foreach (var imageReference in HtmlAgilityPackExtension.GetImageReferences(htmlDoucment))
             {
                 this._website.AddImageReference(imageReference);
             }
@@ -82,68 +90,35 @@ namespace Crawly.Infrastructure.Services
 
         private void AddStylesheetReferences(HtmlDocument htmlDoucment)
         {
-            foreach (var cssReference in GetCssReferences(htmlDoucment))
+            foreach (var cssReference in HtmlAgilityPackExtension.GetStylesheetReferences(htmlDoucment))
             {
                 this._website.AddStylesheetReferences(cssReference);
             }
         }
 
-        private static void SaveHtmlDocument(HtmlDocument htmlDocument, string location)
+        private void SaveHtmlFiles()
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(location));
-            try
+            foreach (var page in this._website.Pages.Where(p => p.Html != null))
             {
-                var fileStream = new FileStream(location, FileMode.Create);
-                htmlDocument.Save(fileStream);
-            }
-            catch
-            {
-
+                this.fileService.SaveFileFromHtmlString(page.Html, page.Location);
             }
         }
 
-        private void DowloadFile(string url, string category)
+        private void DowloadImages()
         {
-            var path = Path.Combine(this._crawlingOptions.Location, category, GetFileNameFromUrl(url));
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
-            var webClient = new WebClient();
-            webClient.DownloadFile(url, path);
+            foreach (var image in this._website.ImageReferences)
+            {
+                this.fileService.DownloadImage(image, this._crawlingOptions.Location);
+            }
         }
 
-        private string GetFileNameFromUrl(string url)
+        private void DowloadStylesheets()
         {
-            var uri = new Uri(url);
-            return Path.GetFileName(uri.LocalPath);
+            foreach (var stylesheet in this._website.StylesheetReferences)
+            {
+                this.fileService.DownloadStylesheet(stylesheet, this._crawlingOptions.Location);
+            }
         }
 
-        private static HtmlDocument LoadHtmlDocumentByUrl(string url)
-        {
-            var web = new HtmlWeb();
-            return web.Load(url);
-        }
-
-        private static IEnumerable<string> GetPageReferences(HtmlDocument htmlDocument)
-        {
-            var references = htmlDocument.DocumentNode.SelectNodes("//a[@href]")
-                ?.Select(n => n.Attributes["href"].Value.ToString());
-
-            return references ?? Enumerable.Empty<string>();
-        }
-
-        private static IEnumerable<string> GetImageReferences(HtmlDocument htmlDocument)
-        {
-            var references = htmlDocument.DocumentNode.SelectNodes("//img")
-                ?.Select(n => n.Attributes["src"].Value.ToString());
-
-            return references ?? Enumerable.Empty<string>();
-        }
-
-        private static IEnumerable<string> GetCssReferences(HtmlDocument htmlDocument)
-        {
-            var references = htmlDocument.DocumentNode.SelectNodes("//link[@type='text/css']")
-                ?.Select(n => n.Attributes["href"].Value.ToString());
-
-            return references ?? Enumerable.Empty<string>();
-        }
     }
 }

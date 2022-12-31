@@ -63,15 +63,6 @@
             }
         }
 
-        public void AddJavaScriptReferences(string url)
-        {
-            var isNotAlreadyExisting = !this.StylesheetReferences.Contains(url);
-            if (isNotAlreadyExisting)
-            {
-                this.StylesheetReferences.Add(url);
-            }
-        }
-
         private void AddExternalReference(string url)
         {
             if (!this.ExternalReferences.Contains(url))

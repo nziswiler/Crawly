@@ -4,6 +4,6 @@ namespace Crawly.Core.Services
 {
     public interface ICrawlingService
     {
-        void CrawlWebsite();
+        void StartCrawling();
     }
 }

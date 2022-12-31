@@ -2,30 +2,25 @@
 {
     public class Page
     {
-        public Page(Uri uri, string topLevelFolder)
+        public Page (Uri uri, string topLevelFolder)
         {
             this.Uri = uri;
-            this.TopLevelFolder = topLevelFolder;
-            this.FileName = getFileName();
-            this.FolderPath = Path.Combine(topLevelFolder, getRelativPath());
+            var folderPath = Path.Combine(topLevelFolder, getRelativPath() ?? topLevelFolder);
+            this.Location = Path.Combine(folderPath, getFileName());
         }
 
         public Uri Uri { get; private set; }
 
-        public string TopLevelFolder { get; private set; }
+        public string? Html { get; set; }
 
-        public string FileName { get; private set; }
-
-        public string FolderPath { get; private set; }
-
-        public string FullPath => Path.Combine(this.FolderPath, this.FileName);
+        public string Location { get; private set; }
 
         private string getFileName()
         {
             var name = this.Uri.Segments.Last();
             if (string.IsNullOrEmpty(name) || name.Equals("/"))
             {
-                name = Path.GetRandomFileName();
+                name = Constants.FileNames.INDEX;
             }
 
             if (name.EndsWith("/"))
@@ -33,15 +28,15 @@
                 name = name.Remove(name.Length - 1, 1);
             }
 
-            if (!name.EndsWith(".html"))
+            if (!name.EndsWith(Constants.FileEndings.HTML))
             {
-                name += ".html";
+                name += Constants.FileEndings.HTML;
             }
 
             return name;
         }
 
-        private string getRelativPath()
+        private string? getRelativPath()
         {
             if (this.Uri.Segments.Count() > 2) 
             {
@@ -50,7 +45,7 @@
                 return folderPath.Replace("/", "\\");
             }
 
-            return this.TopLevelFolder;
+            return null;
         }
     }
 }
