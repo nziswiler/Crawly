@@ -2,6 +2,7 @@
 
 using Crawly.Core.Domain;
 using Crawly.Core.Services;
+using System.Net;
 
 namespace Crawly.Infrastructure.Services
 {
@@ -45,15 +46,21 @@ namespace Crawly.Infrastructure.Services
                 }
             }
 
-            // TODO
+            // TODO: Refactor
             if (this._crawlingOptions.DownloadImages)
             {
-
+                foreach(var imageReference in this._website.ImageReferences)
+                {
+                    this.DowloadFile(imageReference, "image");
+                }
             }
 
             if (this._crawlingOptions.DowloadStylesheets)
             {
-
+                foreach (var imageReference in this._website.StylesheetReferences)
+                {
+                    this.DowloadFile(imageReference, "css");
+                }
             }
         }
 
@@ -84,8 +91,29 @@ namespace Crawly.Infrastructure.Services
         private static void SaveHtmlDocument(HtmlDocument htmlDocument, string location)
         {
             Directory.CreateDirectory(Path.GetDirectoryName(location));
-            var fileStream = new FileStream(location, FileMode.Create);
-            htmlDocument.Save(fileStream);
+            try
+            {
+                var fileStream = new FileStream(location, FileMode.Create);
+                htmlDocument.Save(fileStream);
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void DowloadFile(string url, string category)
+        {
+            var path = Path.Combine(this._crawlingOptions.Location, category, GetFileNameFromUrl(url));
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            var webClient = new WebClient();
+            webClient.DownloadFile(url, path);
+        }
+
+        private string GetFileNameFromUrl(string url)
+        {
+            var uri = new Uri(url);
+            return Path.GetFileName(uri.LocalPath);
         }
 
         private static HtmlDocument LoadHtmlDocumentByUrl(string url)
