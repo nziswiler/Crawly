@@ -1,5 +1,6 @@
 ﻿using Crawly.Core;
 using Crawly.Core.Services;
+using Crawly.Infrastructure.Extensions;
 using HtmlAgilityPack;
 using System.Net;
 
@@ -7,14 +8,14 @@ namespace Crawly.Infrastructure.Services
 {
     public class FileService : IFileService
     {
-        public void DownloadImage(string url, string location)
+        public void DownloadImage(Uri uri, string location)
         {
-            this.DowloadFile(url, location, Constants.FileTypes.IMAGES);
+            this.DowloadFile(uri, location, Constants.FileTypes.IMAGES);
         }
 
-        public void DownloadStylesheet(string url, string location)
+        public void DownloadStylesheet(Uri uri, string location)
         {
-            this.DowloadFile(url, location, Constants.FileTypes.CSS);
+            this.DowloadFile(uri, location, Constants.FileTypes.CSS);
         }
 
         public void SaveFileFromHtmlString(string html, string location)
@@ -25,13 +26,13 @@ namespace Crawly.Infrastructure.Services
             htmlDoc.Save(location);
         }
 
-        private void DowloadFile(string url, string location, string category)
+        private void DowloadFile(Uri uri, string location, string category)
         {
-            var path = Path.Combine(location, category.ToLower(), GetFileNameFromUrl(url));
+            var path = Path.Combine(location, category.ToLower(), Path.GetFileName(uri.LocalPath));
 
             Directory.CreateDirectory(GetDirectoryByPath(path));
             var webClient = new WebClient();
-            webClient.DownloadFile(url, path);
+            webClient.DownloadFile(uri.AbsoluteUri, path);
         }
 
 
@@ -40,14 +41,6 @@ namespace Crawly.Infrastructure.Services
             var directory = Path.GetDirectoryName(path);
 
             return directory ?? throw new NotSupportedException("This path is not supported!");
-        }
-
-        // TODO: Check for relativ links
-        private string GetFileNameFromUrl(string url)
-        {
-            var uri = new Uri(url);
-
-            return Path.GetFileName(uri.LocalPath);
         }
     }
 }

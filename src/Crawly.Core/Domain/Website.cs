@@ -24,17 +24,11 @@
 
         public List<string> JavaScriptReferences { get; private set; }
 
-        public void AddPageReference(string url, string location)
+        public void AddPageReference(Uri uri, string location)
         {
-            var isNotAbsolutUrl = !Uri.TryCreate(url, UriKind.Absolute, out Uri? uri);
-            if (isNotAbsolutUrl && !Uri.TryCreate(this.Uri, url, out uri))
+            if (!this.Uri.Host.Equals(uri.Host))
             {
-                return;
-            }
-
-            if (!this.Uri.Host.Equals(uri?.Host))
-            {
-                this.AddExternalReference(url);
+                this.AddExternalReference(uri.AbsoluteUri);
                 return;
             }
 

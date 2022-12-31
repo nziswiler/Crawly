@@ -6,7 +6,7 @@
         {
             this.Uri = uri;
             var folderPath = Path.Combine(topLevelFolder, getRelativPath() ?? topLevelFolder);
-            this.Location = Path.Combine(folderPath, getFileName());
+            this.Location = Path.Combine(folderPath, generateFileName());
         }
 
         public Uri Uri { get; private set; }
@@ -15,7 +15,7 @@
 
         public string Location { get; private set; }
 
-        private string getFileName()
+        private string generateFileName()
         {
             var name = this.Uri.Segments.Last();
             if (string.IsNullOrEmpty(name) || name.Equals("/"))

@@ -1,6 +1,6 @@
 ﻿using HtmlAgilityPack;
 
-namespace Crawly.Infrastructure
+namespace Crawly.Infrastructure.Extensions
 {
     public static class HtmlAgilityPackExtension
     {
@@ -22,7 +22,8 @@ namespace Crawly.Infrastructure
         public static IEnumerable<string> GetPageReferences(HtmlDocument htmlDocument)
         {
             var references = htmlDocument.DocumentNode.SelectNodes("//a[@href]")
-                ?.Select(n => n.Attributes["href"].Value.ToString());
+                ?.Where(n => !n.Attributes["href"].Value.ToString().StartsWith("#")) // Ignore anker links
+                .Select(n => n.Attributes["href"].Value.ToString());
 
             return references ?? Enumerable.Empty<string>();
         }

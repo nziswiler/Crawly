@@ -6,12 +6,12 @@ using Crawly.Infrastructure.Services;
 
 Console.WriteLine("Hello, World!");
 
-var crawlingOptions = new CrawlingOptions(@"C:\\webseiten\\lungenpraxis");
+var crawlingOptions = new CrawlingOptions(@"C:\\webseiten\\shawna");
 crawlingOptions.CrawlRecursivly = true;
 crawlingOptions.CrawlImages = true;
 crawlingOptions.CrawlStylesheets = true;
 crawlingOptions.DownloadHtml = true;
 crawlingOptions.DowloadStylesheets = true;
 crawlingOptions.DownloadImages = true;
-var crawlingService = new CrawlingService("https://www.lungenpraxis-spiez.ch/", crawlingOptions);
+var crawlingService = new CrawlingService("https://www.shawna.ch/", crawlingOptions);
 crawlingService.StartCrawling();

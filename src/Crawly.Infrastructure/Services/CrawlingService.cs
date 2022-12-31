@@ -3,6 +3,7 @@
 using Crawly.Core.Domain;
 using Crawly.Core.Services;
 using System.Net;
+using Crawly.Infrastructure.Extensions;
 
 namespace Crawly.Infrastructure.Services
 {
@@ -23,7 +24,7 @@ namespace Crawly.Infrastructure.Services
 
         public void StartCrawling()
         {
-            this._website.AddPageReference(this._website.Uri.AbsoluteUri, this._crawlingOptions.Location);
+            this._website.AddPageReference(this._website.Uri, this._crawlingOptions.Location);
 
             this.CrawlPage();
             this.SaveFiles();
@@ -35,7 +36,7 @@ namespace Crawly.Infrastructure.Services
             {
                 var currentPage = this._website.Pages[i];
                 var htmlDoucment = HtmlAgilityPackExtension.LoadHtmlDocumentByUrl(currentPage.Uri.AbsoluteUri);
-                currentPage.Html = htmlDoucment.ToString();
+                currentPage.Html = htmlDoucment.DocumentNode.OuterHtml;
 
                 if (this._crawlingOptions.CrawlImages)
                 {
@@ -76,7 +77,7 @@ namespace Crawly.Infrastructure.Services
         {
             foreach (var pageReference in HtmlAgilityPackExtension.GetPageReferences(htmlDoucment))
             {
-                this._website.AddPageReference(pageReference, this._crawlingOptions.Location);
+                this._website.AddPageReference(UriHelper.GetUriFromString(pageReference, this._website.Uri.Host), this._crawlingOptions.Location);
             }
         }
 
@@ -108,7 +109,7 @@ namespace Crawly.Infrastructure.Services
         {
             foreach (var image in this._website.ImageReferences)
             {
-                this.fileService.DownloadImage(image, this._crawlingOptions.Location);
+                this.fileService.DownloadImage(UriHelper.GetUriFromString(image, this._website.Uri.Host), this._crawlingOptions.Location);
             }
         }
 
@@ -116,7 +117,7 @@ namespace Crawly.Infrastructure.Services
         {
             foreach (var stylesheet in this._website.StylesheetReferences)
             {
-                this.fileService.DownloadStylesheet(stylesheet, this._crawlingOptions.Location);
+                this.fileService.DownloadStylesheet(UriHelper.GetUriFromString(stylesheet, this._website.Uri.Host), this._crawlingOptions.Location);
             }
         }
 
