@@ -6,5 +6,9 @@ using Crawly.Infrastructure.Services;
 
 Console.WriteLine("Hello, World!");
 
-var crawlingService = new CrawlingService();
-crawlingService.CrawlWebsite(new Website("https://shawna.ch/", @"C:\\webseiten\\shawna"));
+var crawlingOptions = new CrawlingOptions("https://shawna.ch/");
+crawlingOptions.CrawlRecursivly = true;
+crawlingOptions.CrawlImages = true;
+crawlingOptions.CrawlStylesheets = true;
+var crawlingService = new CrawlingService("https://shawna.ch/", crawlingOptions);
+crawlingService.CrawlWebsite();
