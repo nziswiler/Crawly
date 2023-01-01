@@ -71,6 +71,16 @@ namespace Crawly.Infrastructure.Services
             {
                 this.DowloadStylesheets();
             }
+
+            if (this._crawlingOptions.PageStatisticsEvaluation)
+            {
+                this.SavePageStatisticsAsTxt();
+            }
+
+            if (this._crawlingOptions.ExternalLinksEvaluation)
+            {
+                this.SaveExternalReferencesAsTxt();
+            }
         }
 
         private void AddReferencesRecursivly(HtmlDocument htmlDoucment)
@@ -119,6 +129,16 @@ namespace Crawly.Infrastructure.Services
             {
                 this.fileService.DownloadStylesheet(UriHelper.CreateUriFromString(stylesheet, this._website.Uri.Host), this._crawlingOptions.Location);
             }
+        }
+
+        private void SavePageStatisticsAsTxt()
+        {
+            this.fileService.ExportPageStatistics(this._crawlingOptions.Location, StatisticsPorvider.GetPageMetaData(this._website));
+        }
+
+        private void SaveExternalReferencesAsTxt()
+        {
+            this.fileService.ExportExternalLinks(this._crawlingOptions.Location, this._website.ExternalReferences.ToArray());
         }
 
     }
