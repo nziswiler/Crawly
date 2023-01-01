@@ -1,6 +1,4 @@
-﻿using Crawly.Core;
-
-namespace Crawly.Infrastructure.Extensions
+﻿namespace Crawly.Infrastructure.Extensions
 {
     public static class UriHelper
     {
@@ -12,6 +10,14 @@ namespace Crawly.Infrastructure.Extensions
             {
                 Uri.TryCreate(new Uri(@"https://" + baseUrl), url, out uri);
             }
+
+            return uri ?? throw new UriFormatException("This uri format is not supported!");
+        }
+
+        public static Uri CreateBaseUri(string url)
+        {
+            url = RemoveWorldWideWebFromUrl(url);
+            Uri.TryCreate(url, UriKind.Absolute, out Uri? uri);
 
             return uri ?? throw new UriFormatException("This uri format is not supported!");
         }
