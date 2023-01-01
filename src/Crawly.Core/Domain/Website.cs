@@ -2,9 +2,9 @@
 {
     public class Website
     {
-        public Website(string url)
+        public Website(Uri uri)
         {
-            this.Uri = new Uri(url);
+            this.Uri = uri;
             this.Pages = new List<Page>();
             this.ExternalReferences = new List<string>();
             this.ImageReferences = new List<string>();
@@ -26,13 +26,13 @@
 
         public void AddPageReference(Uri uri, string location)
         {
-            if (!this.Uri.Host.Equals(uri.Host))
+            if (!this.Uri.IsBaseOf(uri))
             {
                 this.AddExternalReference(uri.AbsoluteUri);
                 return;
             }
 
-            var isNotADuplicate = this.Pages.FirstOrDefault(page => page.Uri.AbsoluteUri.Equals(uri.AbsoluteUri)) == null;
+            var isNotADuplicate = this.Pages.FirstOrDefault(page => page.Uri.Equals(uri)) == null;
             if (isNotADuplicate)
             {
                 this.Pages.Add(new Page(uri, location));

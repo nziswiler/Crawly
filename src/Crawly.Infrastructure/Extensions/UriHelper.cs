@@ -1,16 +1,24 @@
-﻿namespace Crawly.Infrastructure.Extensions
+﻿using Crawly.Core;
+
+namespace Crawly.Infrastructure.Extensions
 {
     public static class UriHelper
     {
-        public static Uri GetUriFromString(string url, string baseUrl)
+        public static Uri CreateUriFromString(string url, string baseUrl)
         {
+            url = RemoveWorldWideWebFromUrl(url);
             var isNotAbsolutUrl = !Uri.TryCreate(url, UriKind.Absolute, out Uri? uri);
             if (isNotAbsolutUrl)
             {
                 Uri.TryCreate(new Uri(@"https://" + baseUrl), url, out uri);
             }
 
-            return uri ?? throw new NotSupportedException("This Url is not Supported");
+            return uri ?? throw new UriFormatException("This uri format is not supported!");
+        }
+
+        private static string RemoveWorldWideWebFromUrl(string url)
+        {
+            return url.Replace("www.", string.Empty).Replace("WWW.", string.Empty);
         }
     }
 }

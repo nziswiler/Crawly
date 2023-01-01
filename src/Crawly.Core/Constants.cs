@@ -8,9 +8,11 @@
             public const string CSS = nameof(CSS);
         }
 
-        public struct FileEndings
+        public struct UrlFragments
         {
             public const string HTML = ".html";
+            public const string WWW = "www.";
+            public const string HTTPS = "https://";
         }
 
         public struct FileNames

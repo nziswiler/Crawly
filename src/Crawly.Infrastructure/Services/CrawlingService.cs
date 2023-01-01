@@ -17,7 +17,7 @@ namespace Crawly.Infrastructure.Services
         public CrawlingService(string url, CrawlingOptions crawlingOptions)
         {
             this._crawlingOptions = crawlingOptions;
-            this._website = new Website(url);
+            this._website = new Website(UriHelper.CreateUriFromString(url, url));
 
             this.fileService = new FileService();
         }
@@ -77,7 +77,7 @@ namespace Crawly.Infrastructure.Services
         {
             foreach (var pageReference in HtmlAgilityPackExtension.GetPageReferences(htmlDoucment))
             {
-                this._website.AddPageReference(UriHelper.GetUriFromString(pageReference, this._website.Uri.Host), this._crawlingOptions.Location);
+                this._website.AddPageReference(UriHelper.CreateUriFromString(pageReference, this._website.Uri.Host), this._crawlingOptions.Location);
             }
         }
 
@@ -109,7 +109,7 @@ namespace Crawly.Infrastructure.Services
         {
             foreach (var image in this._website.ImageReferences)
             {
-                this.fileService.DownloadImage(UriHelper.GetUriFromString(image, this._website.Uri.Host), this._crawlingOptions.Location);
+                this.fileService.DownloadImage(UriHelper.CreateUriFromString(image, this._website.Uri.Host), this._crawlingOptions.Location);
             }
         }
 
@@ -117,7 +117,7 @@ namespace Crawly.Infrastructure.Services
         {
             foreach (var stylesheet in this._website.StylesheetReferences)
             {
-                this.fileService.DownloadStylesheet(UriHelper.GetUriFromString(stylesheet, this._website.Uri.Host), this._crawlingOptions.Location);
+                this.fileService.DownloadStylesheet(UriHelper.CreateUriFromString(stylesheet, this._website.Uri.Host), this._crawlingOptions.Location);
             }
         }
 

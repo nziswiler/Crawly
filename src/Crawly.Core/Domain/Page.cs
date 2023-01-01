@@ -28,9 +28,9 @@
                 name = name.Remove(name.Length - 1, 1);
             }
 
-            if (!name.EndsWith(Constants.FileEndings.HTML))
+            if (!name.EndsWith(Constants.UrlFragments.HTML))
             {
-                name += Constants.FileEndings.HTML;
+                name += Constants.UrlFragments.HTML;
             }
 
             return name;
