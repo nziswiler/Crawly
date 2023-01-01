@@ -38,7 +38,7 @@ namespace Crawly.Infrastructure.Extensions
 
         public static IEnumerable<string> GetStylesheetReferences(HtmlDocument htmlDocument)
         {
-            var references = htmlDocument.DocumentNode.SelectNodes("//link[@type='text/css']")
+            var references = htmlDocument.DocumentNode.SelectNodes("//link[@rel='stylesheet']")
                 ?.Select(n => n.Attributes["href"].Value.ToString());
 
             return references ?? Enumerable.Empty<string>();
