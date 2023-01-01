@@ -18,6 +18,8 @@
         public struct FileNames
         {
             public const string INDEX = "index.html";
+            public const string PageStatistics = "pageStatistics.txt";
+            public const string ExternalReferences = "externalReferences.txt";
         }
     }
 }

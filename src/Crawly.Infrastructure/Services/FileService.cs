@@ -26,6 +26,17 @@ namespace Crawly.Infrastructure.Services
             htmlDoc.Save(location);
         }
 
+        public void ExportPageStatistics(string location, IEnumerable<string> text)
+        {
+            this.SaveStringArrayAsTxt(location, Constants.FileNames.PageStatistics, text);
+        }
+
+        public void ExportExternalLinks(string location, IEnumerable<string> text)
+        {
+            this.SaveStringArrayAsTxt(location, Constants.FileNames.ExternalReferences, text);
+        }
+
+        // TODO: Refector and use HttpClient instead of WebClient
         private void DowloadFile(Uri uri, string location, string category)
         {
             var path = Path.Combine(location, category.ToLower(), Path.GetFileName(uri.LocalPath));
@@ -35,6 +46,12 @@ namespace Crawly.Infrastructure.Services
             webClient.DownloadFile(uri.AbsoluteUri, path);
         }
 
+        private void SaveStringArrayAsTxt(string location, string fileName, IEnumerable<string> text)
+        {
+            var path = Path.Combine(location, fileName);
+            Directory.CreateDirectory(GetDirectoryByPath(path));
+            File.WriteAllLines(path, text);
+        }
 
         private static string GetDirectoryByPath(string path)
         {
