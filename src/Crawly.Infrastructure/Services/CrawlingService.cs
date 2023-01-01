@@ -14,10 +14,10 @@ namespace Crawly.Infrastructure.Services
 
         private readonly IFileService fileService;
 
-        public CrawlingService(string url, CrawlingOptions crawlingOptions)
+        public CrawlingService(Uri uri, CrawlingOptions crawlingOptions)
         {
             this._crawlingOptions = crawlingOptions;
-            this._website = new Website(UriHelper.CreateUriFromString(url, url));
+            this._website = new Website(uri);
 
             this.fileService = new FileService();
         }

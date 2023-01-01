@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crawly.Core", "src\Crawly.Core\Crawly.Core.csproj", "{73966B85-4BCB-42C7-9383-3023A709409A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crawly.Core", "src\Crawly.Core\Crawly.Core.csproj", "{73966B85-4BCB-42C7-9383-3023A709409A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crawly.Infrastructure", "src\Crawly.Infrastructure\Crawly.Infrastructure.csproj", "{29A83421-39BE-4BB5-B190-5826BBA99C2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crawly.Infrastructure", "src\Crawly.Infrastructure\Crawly.Infrastructure.csproj", "{29A83421-39BE-4BB5-B190-5826BBA99C2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crawly.UI.Console", "src\Crawly.UI.Console\Crawly.UI.Console.csproj", "{59F06212-A77C-4E46-802C-BFE0E8DEA145}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crawly.UI.CommandLine", "src\Crawly.UI.Console\Crawly.UI.CommandLine.csproj", "{59F06212-A77C-4E46-802C-BFE0E8DEA145}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
