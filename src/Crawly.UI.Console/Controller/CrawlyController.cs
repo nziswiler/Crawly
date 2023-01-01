@@ -22,11 +22,11 @@ namespace Crawly.UI.CommandLine.Controller
                 CrawlyView.DisplayCrawlingScreen();
                 var crawlingService = new CrawlingService(this.uri, this.crawlingOptions);
                 crawlingService.StartCrawling();
-                DisplaySuccessMessage("Der Vorgang wurde erfolgreich abgeschlossen. Drücken Sie Enter um zum Hauptmenü zurückzukehren...");
+                DisplaySuccessMessage("Der Vorgang wurde erfolgreich abgeschlossen. Drücke Enter um zum Hauptmenü zurückzukehren...");
             }
             else
             {
-                ErrorMessage("Etwas ist bei der Konfiguration schief gegangen. Versuchen Sie es erneuts.");
+                ErrorMessage("Etwas ist bei der Konfiguration schief gegangen. Versuch es erneut.");
             }
 
             this.MainMenuScreen();
@@ -50,7 +50,7 @@ namespace Crawly.UI.CommandLine.Controller
             }
             else
             {
-                ErrorMessage("Bitte geben Sie eine Nummer von 1-3 an.");
+                ErrorMessage("Bitte gib eine Nummer von 1-3 an.");
                 MainMenuScreen();
             }
         }
@@ -60,7 +60,7 @@ namespace Crawly.UI.CommandLine.Controller
             var userInput = CrawlyView.GetDownloadMenuInput();
             if (!int.TryParse(userInput, out int menuPoint) || menuPoint > 6)
             {
-                ErrorMessage("Bitte geben Sie eine Nummer von 1-6 an");
+                ErrorMessage("Bitte gib eine Nummer von 1-6 an");
                 DownloadMenuScreen();
                 return;
             }
@@ -90,6 +90,41 @@ namespace Crawly.UI.CommandLine.Controller
             {
                 crawlingOptions?.DownloadImagesSingle();
             }
+            else
+            {
+                crawlingOptions?.DownloadStylesheetSingle();
+            }
+
+            this.StartCrawling();
+        }
+
+        public void StatisticsMenuScreen()
+        {
+            var userInput = CrawlyView.GetStatisticsMenuInput();
+            if (!int.TryParse(userInput, out int menuPoint) || menuPoint > 3)
+            {
+                ErrorMessage("Bitte gib eine Nummer von 1-3 an");
+                StatisticsMenuScreen();
+                return;
+            }
+
+            if (menuPoint == 3)
+            {
+                MainMenuScreen();
+                return;
+            }
+
+            CrawlingUrlScreen(menuPoint);
+            TargetDirectoryScreen(menuPoint);
+
+            if (menuPoint == 1)
+            {
+                crawlingOptions?.ExportPageStatistics();
+            }
+            else
+            {
+                crawlingOptions?.ExportExternalLinks();
+            }
 
             this.StartCrawling();
         }
@@ -101,7 +136,7 @@ namespace Crawly.UI.CommandLine.Controller
             {
                 if (userInput.ToLower().Equals("x"))
                 {
-                    DownloadMenuScreen();
+                    MainMenuScreen();
                     return;
                 }
 
@@ -109,7 +144,7 @@ namespace Crawly.UI.CommandLine.Controller
             }
             catch
             {
-                ErrorMessage("Bitte geben Sie eine gülte URL im Format (Format: https://domain.ch) an");
+                ErrorMessage("Bitte gib eine gültige URL im Format (Format: https://domain.ch) an");
                 CrawlingUrlScreen(parentMenuPoint);
             }
         }
@@ -121,7 +156,7 @@ namespace Crawly.UI.CommandLine.Controller
             {
                 if (userInput.ToLower().Equals("x"))
                 {
-                    DownloadMenuScreen();
+                    MainMenuScreen();
                     return;
                 }
 
@@ -134,14 +169,9 @@ namespace Crawly.UI.CommandLine.Controller
             }
             catch
             {
-                ErrorMessage("Bitte geben Sie einen gülten Pfad im Format [Laufwerkbuchstabe]:/pfad/zum/ordner an)");
+                ErrorMessage("Bitte gib einen gültigen Pfad im Format [Laufwerkbuchstabe]:/pfad/zum/ordner an)");
                 TargetDirectoryScreen(parentMenuPoint);
             }
-        }
-
-        public void StatisticsMenuScreen()
-        {
-            var userInput = CrawlyView.GetStatisticsMenuInput();
         }
 
         private static void ErrorMessage(string message)

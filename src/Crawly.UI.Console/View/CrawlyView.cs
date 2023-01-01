@@ -7,10 +7,10 @@
             DisplayHeader();
             Console.WriteLine("    Hauptmenü:");
             Console.WriteLine("    ---------------------------------------------------------------------");
-            Console.WriteLine("    1 Webseite herunterladen");
-            Console.WriteLine("    2 Webseiten Statistiken ");
+            Console.WriteLine("    1 Herunterladen Webseite");
+            Console.WriteLine("    2 Statistiken Webseite \n");
             Console.WriteLine("    3 Crawly beenden\n");
-            Console.Write("    Bitte wähle den gewünschten Menupunkt aus (1-3): ");
+            Console.Write("    Bitte wähle den gewünschten Menüpunkt aus (1-3): ");
 
             return Console.ReadLine() ?? string.Empty;
         }
@@ -20,13 +20,13 @@
             DisplayHeader();
             Console.WriteLine("    Download Menü:");
             Console.WriteLine("    ---------------------------------------------------------------------");
-            Console.WriteLine("    1 Komplette Webseite herunterladen (rekursiv). !Achtung dieser Vorgang kann eine hohe Belastung für den Zielserver sein.!");
+            Console.WriteLine("    1 Komplette Webseite herunterladen (rekursiv). !Hohe Belastung für Server möglich!");
             Console.WriteLine("    2 Nur HTML-Dateien einer Webseite herunterladen (rekursiv)");
             Console.WriteLine("    3 Einzelne Seite komplett herunterladen");
             Console.WriteLine("    4 Bilder einer einzelnen Seite herunterladen");
-            Console.WriteLine("    5 Konfigurieren [-r, -html, -img, -css] (Bsp.: 5 -r -img -css):");
+            Console.WriteLine("    5 CSS einer einzelnen Seite herunterladen");
             Console.WriteLine("    6 Zrück zum Hauptmenü\n");
-            Console.Write("    Bitte wähle den gewünschten Menupunkt aus (1-6): ");
+            Console.Write("    Bitte wähle den gewünschten Menüpunkt aus (1-6): ");
 
             return Console.ReadLine() ?? string.Empty;
         }
@@ -34,13 +34,12 @@
         public static string GetStatisticsMenuInput()
         {
             DisplayHeader();
-            Console.Clear();
             Console.WriteLine("    Statistik Menü:");
             Console.WriteLine("    ----------------------------------------------------------------------");
-            Console.WriteLine("    1 Externe Links anzeigen");
-            Console.WriteLine("    2 Externe Links exportieren");
-            Console.WriteLine("    3 Zrück zum Hauptmenü\n");
-            Console.Write("    Bitte wähle den gewünschten Menupunkt aus (1-3):");
+            Console.WriteLine("    1 Statistik der Webseite als TXT-Datei exportieren");
+            Console.WriteLine("    2 Externe Links als TXT-Datei exportieren\n");
+            Console.WriteLine("    3 Zurück zum Hauptmenü\n");
+            Console.Write("    Bitte wähle den gewünschten Menüpunkt aus (1-3): ");
 
             return Console.ReadLine() ?? string.Empty;
         }
@@ -49,7 +48,7 @@
         {
             DisplayHeader();
             Console.WriteLine("    Du hast den Menupunkt: " + menuPoint + " ausgewählt.");
-            Console.WriteLine("    (Mit der Eingabe 'X' gelangen Sie zurück zum Menu.)");
+            Console.WriteLine("    (Mit der Eingabe 'X' gelangen Sie zurück zum Hauptmenü.)");
             Console.WriteLine("    -----------------------------------------------------");
             Console.Write("    Bitte gib die gewünschte URL an (Format: https://domain.ch): ");
 
@@ -61,7 +60,7 @@
         {
             DisplayHeader();
             Console.WriteLine("    Du hast den Menupunkt: " + menuPoint + " ausgewählt.");
-            Console.WriteLine("    (Mit der Eingabe 'X' gelangst du zurück zum Menu.)");
+            Console.WriteLine("    (Mit der Eingabe 'X' gelangst du zurück zum Hauptmenü.)");
             Console.WriteLine("    -----------------------------------------------------");
             Console.Write("    Bitte gib den gewünschten Speicherort an (Format: [Laufwerkbuchstabe]:/mein/pfad): ");
 
@@ -71,10 +70,10 @@
         public static void DisplayCrawlingScreen()
         {
             DisplayHeader();
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("    Das Crawling wurde nun gestartet.");
             Console.WriteLine("    Dieser Vorgang kann einige Zeit in Anspruch nehemen.");
-            Console.WriteLine("    Vielen Dank für Deine Geduld!");
+            Console.WriteLine("    Vielen Dank für Deine Geduld!\n");
             Console.ResetColor();
         }
 
@@ -82,8 +81,8 @@
         {
             DisplayHeader();
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("    Vielen Dank, dass Du Crawly verwendet haben!");
-            Console.WriteLine("    Hoffentlich bis bald.");
+            Console.WriteLine("    Vielen Dank, dass Du Crawly verwendet hast!");
+            Console.Write("    Hoffentlich bis bald. ");
             ShowSpinner();
             Console.ResetColor();
         }
@@ -116,6 +115,7 @@
             Console.WriteLine("    Crawly ist ein freundliches Tool. Bitte crawle nur Webseiten, welche es explizit erlauben!");
             Console.WriteLine("    Überprüfe vor jedem Crawling-Vorgang, ob in der Robots.txt Datei (meistens im Root-Ordner der Webseite)");
             Console.WriteLine("    crawling zugelassen wird. Respektiere den Wunsch der Betreiber. Danke.\n");
+            Console.WriteLine("    ###########################################################################################################\n");
             Console.ResetColor();
         }
 
