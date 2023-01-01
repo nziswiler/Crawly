@@ -9,7 +9,6 @@
             this.ExternalReferences = new List<string>();
             this.ImageReferences = new List<string>();
             this.StylesheetReferences = new List<string>();
-            this.JavaScriptReferences = new List<string>();
         }
 
         public Uri Uri { get; private set; }
@@ -21,8 +20,6 @@
         public List<string> ImageReferences { get; private set; }
 
         public List<string> StylesheetReferences { get; private set; }
-
-        public List<string> JavaScriptReferences { get; private set; }
 
         public void AddPageReference(Uri uri, string location)
         {
