@@ -6,9 +6,12 @@ using Crawly.Infrastructure.Services;
 
 Console.WriteLine("Hello, World!");
 
-var crawlingOptions = new CrawlingOptions("https://shawna.ch/");
+var crawlingOptions = new CrawlingOptions(@"C:\\webseiten\\shawna");
 crawlingOptions.CrawlRecursivly = true;
 crawlingOptions.CrawlImages = true;
 crawlingOptions.CrawlStylesheets = true;
-var crawlingService = new CrawlingService("https://shawna.ch/", crawlingOptions);
-crawlingService.CrawlWebsite();
+crawlingOptions.DownloadHtml = true;
+crawlingOptions.DowloadStylesheets = true;
+crawlingOptions.DownloadImages = true;
+var crawlingService = new CrawlingService("https://www.shawna.ch/", crawlingOptions);
+crawlingService.StartCrawling();

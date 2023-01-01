@@ -2,9 +2,9 @@
 {
     public class Website
     {
-        public Website(string url)
+        public Website(Uri uri)
         {
-            this.Uri = new Uri(url);
+            this.Uri = uri;
             this.Pages = new List<Page>();
             this.ExternalReferences = new List<string>();
             this.ImageReferences = new List<string>();
@@ -24,21 +24,15 @@
 
         public List<string> JavaScriptReferences { get; private set; }
 
-        public void AddPageReference(string url, string location)
+        public void AddPageReference(Uri uri, string location)
         {
-            var isNotAbsolutUrl = !Uri.TryCreate(url, UriKind.Absolute, out Uri? uri);
-            if (isNotAbsolutUrl && !Uri.TryCreate(this.Uri, url, out uri))
+            if (!this.Uri.IsBaseOf(uri))
             {
+                this.AddExternalReference(uri.AbsoluteUri);
                 return;
             }
 
-            if (!this.Uri.Host.Equals(uri?.Host))
-            {
-                this.AddExternalReference(url);
-                return;
-            }
-
-            var isNotADuplicate = this.Pages.FirstOrDefault(page => page.Uri.AbsoluteUri.Equals(uri.AbsoluteUri)) == null;
+            var isNotADuplicate = this.Pages.FirstOrDefault(page => page.Uri.Equals(uri)) == null;
             if (isNotADuplicate)
             {
                 this.Pages.Add(new Page(uri, location));
@@ -55,15 +49,6 @@
         }
 
         public void AddStylesheetReferences(string url)
-        {
-            var isNotAlreadyExisting = !this.StylesheetReferences.Contains(url);
-            if (isNotAlreadyExisting)
-            {
-                this.StylesheetReferences.Add(url);
-            }
-        }
-
-        public void AddJavaScriptReferences(string url)
         {
             var isNotAlreadyExisting = !this.StylesheetReferences.Contains(url);
             if (isNotAlreadyExisting)
