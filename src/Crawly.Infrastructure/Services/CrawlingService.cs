@@ -111,7 +111,15 @@ namespace Crawly.Infrastructure.Services
         {
             foreach (var page in this._website.Pages.Where(p => p.Html != null))
             {
-                this.fileService.SaveFileFromHtmlString(page.Html, page.Location);
+                try
+                {
+                    this.fileService.SaveFileFromHtmlString(page.Html, page.Location);
+                }
+                catch (Exception)
+                {
+                    // Skip faulty links
+                    // TODO: Implement reporting of faulty links
+                }
             }
         }
 
@@ -119,7 +127,15 @@ namespace Crawly.Infrastructure.Services
         {
             foreach (var image in this._website.ImageReferences)
             {
-                this.fileService.DownloadImage(UriHelper.CreateUriFromString(image, this._website.Uri.Host), this._crawlingOptions.Location);
+                try
+                {
+                    this.fileService.DownloadImage(UriHelper.CreateUriFromString(image, this._website.Uri.Host), this._crawlingOptions.Location);
+                }
+                catch (Exception)
+                {
+                    // Skip faulty image links
+                    // TODO: Implement reporting of faulty links
+                }
             }
         }
 
@@ -127,7 +143,15 @@ namespace Crawly.Infrastructure.Services
         {
             foreach (var stylesheet in this._website.StylesheetReferences)
             {
-                this.fileService.DownloadStylesheet(UriHelper.CreateUriFromString(stylesheet, this._website.Uri.Host), this._crawlingOptions.Location);
+                try
+                {
+                    this.fileService.DownloadStylesheet(UriHelper.CreateUriFromString(stylesheet, this._website.Uri.Host), this._crawlingOptions.Location);
+                }
+                catch (Exception)
+                {
+                    // Skip faulty stylesheet links
+                    // TODO: Implement reporting of faulty links
+                }
             }
         }
 
