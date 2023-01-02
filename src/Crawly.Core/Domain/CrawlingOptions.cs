@@ -25,7 +25,7 @@
 
         public bool ExternalLinksEvaluation { get; private set; }
 
-        public void DowloadFullPageRecusivly()
+        public void ConfigureFullPageDownload()
         {
             this.Configure(dowloadHtml: true, 
                 crawlRecursivly: true, 
@@ -37,7 +37,7 @@
                 externalLinksEvaluation: false);
         }
 
-        public void DowonloadHtmlFilesRecursivly()
+        public void ConfigureHtmlOnlyDownloadRecursivly()
         {
             this.Configure(dowloadHtml: true, 
                 crawlRecursivly: true, 
@@ -49,7 +49,7 @@
                 externalLinksEvaluation: false);
         }
 
-        public void DowloadFullPageSingle()
+        public void ConfigureSinglePageDownload()
         {
             this.Configure(dowloadHtml: true, 
                 crawlRecursivly: false, 
@@ -61,10 +61,10 @@
                 externalLinksEvaluation: false);
         }
 
-        public void DownloadImagesSingle()
+        public void ConfigureImagesOnlyDownload()
         {
             this.Configure(dowloadHtml: false, 
-                crawlRecursivly: true, 
+                crawlRecursivly: false, 
                 crawlImages: true, 
                 downloadImages: true, 
                 crawlStylesheets: false, 
@@ -72,7 +72,7 @@
                 pageStatisticsEvaluation: false,
                 externalLinksEvaluation: false);
         }
-        public void DownloadStylesheetSingle()
+        public void ConfigureStylesheetsOnlyDownload()
         {
             this.Configure(dowloadHtml: false,
                 crawlRecursivly: false,
@@ -84,7 +84,7 @@
                 externalLinksEvaluation: false);
         }
 
-        public void ExportPageStatistics()
+        public void ConfigurePageStatisticsExport()
         {
             this.Configure(dowloadHtml: false,
                 crawlRecursivly: true,
@@ -96,7 +96,7 @@
                 externalLinksEvaluation: false);
         }
 
-        public void ExportExternalLinks()
+        public void ConfigureExternalLinksExport()
         {
             this.Configure(dowloadHtml: false,
                 crawlRecursivly: true,
