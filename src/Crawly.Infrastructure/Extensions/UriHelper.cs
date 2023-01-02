@@ -11,7 +11,7 @@
                 Uri.TryCreate(new Uri(@"https://" + baseUrl), url, out uri);
             }
 
-            return uri ?? CreateBaseUri(@"https://" + sbaseUrl);
+            return uri ?? CreateBaseUri(@"https://" + baseUrl);
         }
 
         public static Uri CreateBaseUri(string url)
