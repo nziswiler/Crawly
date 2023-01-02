@@ -2,7 +2,6 @@
 
 using Crawly.Core.Domain;
 using Crawly.Core.Services;
-using System.Net;
 using Crawly.Infrastructure.Extensions;
 
 namespace Crawly.Infrastructure.Services
@@ -38,17 +37,17 @@ namespace Crawly.Infrastructure.Services
                 var htmlDoucment = HtmlAgilityPackExtension.LoadHtmlDocumentByUrl(currentPage.Uri.AbsoluteUri);
                 currentPage.Html = htmlDoucment.DocumentNode.OuterHtml;
 
-                if (this._crawlingOptions.CrawlImages)
+                if (this._crawlingOptions.IsImageCrawlingActiv)
                 {
                     this.AddImageReferences(htmlDoucment);
                 }
 
-                if (this._crawlingOptions.CrawlStylesheets)
+                if (this._crawlingOptions.IsStylesheetCrawlingActiv)
                 {
                     this.AddStylesheetReferences(htmlDoucment);
                 }
 
-                if (this._crawlingOptions.CrawlRecursivly)
+                if (this._crawlingOptions.IsRecurisvCrawlingActiv)
                 {
                     this.AddReferencesRecursivly(htmlDoucment);
                 }
@@ -57,27 +56,27 @@ namespace Crawly.Infrastructure.Services
 
         private void SaveFiles()
         {
-            if (this._crawlingOptions.DownloadHtml)
+            if (this._crawlingOptions.IsHtmlDownloadActiv)
             {
                 this.SaveHtmlFiles();
             }
 
-            if (this._crawlingOptions.DownloadImages)
+            if (this._crawlingOptions.IsImageDownloadActiv)
             {
                 this.DowloadImages();
             }
 
-            if (this._crawlingOptions.DowloadStylesheets)
+            if (this._crawlingOptions.IsStylesheetDownloadActiv)
             {
                 this.DowloadStylesheets();
             }
 
-            if (this._crawlingOptions.PageStatisticsEvaluation)
+            if (this._crawlingOptions.IsExportPageStatisticsActiv)
             {
                 this.SavePageStatisticsAsTxt();
             }
 
-            if (this._crawlingOptions.ExternalLinksEvaluation)
+            if (this._crawlingOptions.IsExportExternalLiksActiv)
             {
                 this.SaveExternalReferencesAsTxt();
             }

@@ -9,115 +9,115 @@
 
         public string Location { get; private set; }
 
-        public bool DownloadHtml { get; private set; }
+        public bool IsHtmlDownloadActiv { get; private set; }
 
-        public bool CrawlRecursivly { get; private set; }
+        public bool IsRecurisvCrawlingActiv { get; private set; }
 
-        public bool CrawlImages { get; private set; }
+        public bool IsImageCrawlingActiv { get; private set; }
 
-        public bool DownloadImages { get; private set; }
+        public bool IsImageDownloadActiv { get; private set; }
 
-        public bool CrawlStylesheets { get; private set; }
+        public bool IsStylesheetCrawlingActiv { get; private set; }
 
-        public bool DowloadStylesheets { get; private set; }
+        public bool IsStylesheetDownloadActiv { get; private set; }
 
-        public bool PageStatisticsEvaluation { get; private set; }
+        public bool IsExportPageStatisticsActiv { get; private set; }
 
-        public bool ExternalLinksEvaluation { get; private set; }
+        public bool IsExportExternalLiksActiv { get; private set; }
 
         public void DowloadFullPageRecusivly()
         {
-            this.Configure(dowloadHtml: true, 
-                crawlRecursivly: true, 
-                crawlImages: true, 
-                downloadImages: true, 
-                crawlStylesheets: true, 
-                dowloadStylesheets: true,
-                pageStatisticsEvaluation: false,
-                externalLinksEvaluation: false);
+            this.Configure(isHtmlDownloadActiv: true,
+                isRecurisvCrawlingActiv: true,
+                isImageCrawlingActiv: true,
+                isImageDownloadActiv: true,
+                isStylesheetCrawlingActiv: true,
+                isStylesheetDownloadActiv: true,
+                isExportPageStatisticsActiv: false,
+                isExportExternalLiksActiv: false);
         }
 
         public void DowonloadHtmlFilesRecursivly()
         {
-            this.Configure(dowloadHtml: true, 
-                crawlRecursivly: true, 
-                crawlImages: false, 
-                downloadImages: false, 
-                crawlStylesheets: false, 
-                dowloadStylesheets: false,
-                pageStatisticsEvaluation: false,
-                externalLinksEvaluation: false);
+            this.Configure(isHtmlDownloadActiv: true,
+                isRecurisvCrawlingActiv: true,
+                isImageCrawlingActiv: false,
+                isImageDownloadActiv: false,
+                isStylesheetCrawlingActiv: false,
+                isStylesheetDownloadActiv: false,
+                isExportPageStatisticsActiv: false,
+                isExportExternalLiksActiv: false);
         }
 
         public void DowloadFullPageSingle()
         {
-            this.Configure(dowloadHtml: true, 
-                crawlRecursivly: false, 
-                crawlImages: true, 
-                downloadImages: true, 
-                crawlStylesheets: true, 
-                dowloadStylesheets: true,
-                pageStatisticsEvaluation: false,
-                externalLinksEvaluation: false);
+            this.Configure(isHtmlDownloadActiv: true,
+                isRecurisvCrawlingActiv: false,
+                isImageCrawlingActiv: true,
+                isImageDownloadActiv: true,
+                isStylesheetCrawlingActiv: true,
+                isStylesheetDownloadActiv: true,
+                isExportPageStatisticsActiv: false,
+                isExportExternalLiksActiv: false);
         }
 
         public void DownloadImagesSingle()
         {
-            this.Configure(dowloadHtml: false, 
-                crawlRecursivly: true, 
-                crawlImages: true, 
-                downloadImages: true, 
-                crawlStylesheets: false, 
-                dowloadStylesheets: false,
-                pageStatisticsEvaluation: false,
-                externalLinksEvaluation: false);
+            this.Configure(isHtmlDownloadActiv: false,
+                isRecurisvCrawlingActiv: true,
+                isImageCrawlingActiv: true,
+                isImageDownloadActiv: true,
+                isStylesheetCrawlingActiv: false,
+                isStylesheetDownloadActiv: false,
+                isExportPageStatisticsActiv: false,
+                isExportExternalLiksActiv: false);
         }
         public void DownloadStylesheetSingle()
         {
-            this.Configure(dowloadHtml: false,
-                crawlRecursivly: false,
-                crawlImages: false,
-                downloadImages: false,
-                crawlStylesheets: true,
-                dowloadStylesheets: true,
-                pageStatisticsEvaluation: false,
-                externalLinksEvaluation: false);
+            this.Configure(isHtmlDownloadActiv: false,
+                isRecurisvCrawlingActiv: false,
+                isImageCrawlingActiv: false,
+                isImageDownloadActiv: false,
+                isStylesheetCrawlingActiv: true,
+                isStylesheetDownloadActiv: true,
+                isExportPageStatisticsActiv: false,
+                isExportExternalLiksActiv: false);
         }
 
         public void ExportPageStatistics()
         {
-            this.Configure(dowloadHtml: false,
-                crawlRecursivly: true,
-                crawlImages: false,
-                downloadImages: false,
-                crawlStylesheets: false,
-                dowloadStylesheets: false,
-                pageStatisticsEvaluation: true,
-                externalLinksEvaluation: false);
+            this.Configure(isHtmlDownloadActiv: false,
+                isRecurisvCrawlingActiv: true,
+                isImageCrawlingActiv: false,
+                isImageDownloadActiv: false,
+                isStylesheetCrawlingActiv: false,
+                isStylesheetDownloadActiv: false,
+                isExportPageStatisticsActiv: true,
+                isExportExternalLiksActiv: false);
         }
 
         public void ExportExternalLinks()
         {
-            this.Configure(dowloadHtml: false,
-                crawlRecursivly: true,
-                crawlImages: false,
-                downloadImages: false,
-                crawlStylesheets: false,
-                dowloadStylesheets: false,
-                pageStatisticsEvaluation: false,
-                externalLinksEvaluation: true);
+            this.Configure(isHtmlDownloadActiv: false,
+                isRecurisvCrawlingActiv: true,
+                isImageCrawlingActiv: false,
+                isImageDownloadActiv: false,
+                isStylesheetCrawlingActiv: false,
+                isStylesheetDownloadActiv: false,
+                isExportPageStatisticsActiv: false,
+                isExportExternalLiksActiv: true);
         }
 
-        public void Configure(bool dowloadHtml, bool crawlRecursivly, bool crawlImages, bool downloadImages, bool crawlStylesheets, bool dowloadStylesheets, bool pageStatisticsEvaluation, bool externalLinksEvaluation)
+        public void Configure(bool isHtmlDownloadActiv, bool isRecurisvCrawlingActiv, bool isImageCrawlingActiv, bool isImageDownloadActiv, bool isStylesheetCrawlingActiv, bool isStylesheetDownloadActiv, bool isExportPageStatisticsActiv, bool isExportExternalLiksActiv)
         {
-            this.DownloadHtml = dowloadHtml;
-            this.CrawlRecursivly = crawlRecursivly;
-            this.CrawlImages = crawlImages;
-            this.DownloadImages = downloadImages;
-            this.CrawlStylesheets = crawlStylesheets;
-            this.DowloadStylesheets = dowloadStylesheets;
-            this.PageStatisticsEvaluation = pageStatisticsEvaluation;
-            this.ExternalLinksEvaluation = externalLinksEvaluation;
+            this.IsHtmlDownloadActiv = isHtmlDownloadActiv;
+            this.IsRecurisvCrawlingActiv = isRecurisvCrawlingActiv;
+            this.IsImageCrawlingActiv = isImageCrawlingActiv;
+            this.IsImageDownloadActiv = isImageDownloadActiv;
+            this.IsStylesheetCrawlingActiv = isStylesheetCrawlingActiv;
+            this.IsStylesheetDownloadActiv = isStylesheetDownloadActiv;
+            this.IsExportPageStatisticsActiv = isExportPageStatisticsActiv;
+            this.IsExportExternalLiksActiv = isExportExternalLiksActiv;
         }
     }
 }
