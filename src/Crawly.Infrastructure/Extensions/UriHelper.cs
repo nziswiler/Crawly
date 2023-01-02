@@ -11,7 +11,7 @@
                 Uri.TryCreate(new Uri(@"https://" + baseUrl), url, out uri);
             }
 
-            return uri ?? throw new UriFormatException("This uri format is not supported!");
+            return uri ?? CreateBaseUri(@"https://" + sbaseUrl);
         }
 
         public static Uri CreateBaseUri(string url)
