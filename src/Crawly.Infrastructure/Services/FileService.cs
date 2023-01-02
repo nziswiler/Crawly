@@ -1,7 +1,6 @@
 ﻿using Crawly.Core;
 using Crawly.Core.Services;
 using Crawly.Infrastructure.Extensions;
-using HtmlAgilityPack;
 using System.Net;
 
 namespace Crawly.Infrastructure.Services
@@ -10,12 +9,12 @@ namespace Crawly.Infrastructure.Services
     {
         public void DownloadImage(Uri uri, string location)
         {
-            this.DowloadFile(uri, location, Constants.FileTypes.IMAGES);
+            DowloadFile(uri, location, Constants.FileTypes.Images);
         }
 
         public void DownloadStylesheet(Uri uri, string location)
         {
-            this.DowloadFile(uri, location, Constants.FileTypes.CSS);
+            DowloadFile(uri, location, Constants.FileTypes.Css);
         }
 
         public void SaveFileFromHtmlString(string html, string location)
@@ -28,16 +27,16 @@ namespace Crawly.Infrastructure.Services
 
         public void ExportPageStatistics(string location, IEnumerable<string> text)
         {
-            this.SaveStringArrayAsTxt(location, Constants.FileNames.PageStatistics, text);
+            SaveStringArrayAsTxt(location, Constants.FileNames.PageStatistics, text);
         }
 
         public void ExportExternalLinks(string location, IEnumerable<string> text)
         {
-            this.SaveStringArrayAsTxt(location, Constants.FileNames.ExternalReferences, text);
+            SaveStringArrayAsTxt(location, Constants.FileNames.ExternalReferences, text);
         }
 
         // TODO: Refector and use HttpClient instead of WebClient
-        private void DowloadFile(Uri uri, string location, string category)
+        private static void DowloadFile(Uri uri, string location, string category)
         {
             var path = Path.Combine(location, category.ToLower(), Path.GetFileName(uri.LocalPath));
 
@@ -46,7 +45,7 @@ namespace Crawly.Infrastructure.Services
             webClient.DownloadFile(uri.AbsoluteUri, path);
         }
 
-        private void SaveStringArrayAsTxt(string location, string fileName, IEnumerable<string> text)
+        private static void SaveStringArrayAsTxt(string location, string fileName, IEnumerable<string> text)
         {
             var path = Path.Combine(location, fileName);
             Directory.CreateDirectory(GetDirectoryByPath(path));

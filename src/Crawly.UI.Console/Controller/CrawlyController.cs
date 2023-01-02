@@ -35,16 +35,16 @@ namespace Crawly.UI.CommandLine.Controller
         private void MainMenuScreen()
         {
             var userInput = CrawlyView.GetMainMenuInput();
-            bool userInputIsNumber = int.TryParse(userInput, out int menuPoint);
-            if (userInputIsNumber && menuPoint == 1)
+            bool IsUserInputANumber = int.TryParse(userInput, out int menuPoint);
+            if (IsUserInputANumber && menuPoint == 1)
             {
                 DownloadMenuScreen();
             }
-            else if (userInputIsNumber && menuPoint == 2)
+            else if (IsUserInputANumber && menuPoint == 2)
             {
                 StatisticsMenuScreen();
             }
-            else if (userInputIsNumber && menuPoint == 3)
+            else if (IsUserInputANumber && menuPoint == 3)
             {
                 CloseCrawly();
             }

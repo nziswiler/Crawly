@@ -5,8 +5,8 @@
         public static Uri CreateUriFromString(string url, string baseUrl)
         {
             url = RemoveWorldWideWebFromUrl(url);
-            var isNotAbsolutUrl = !Uri.TryCreate(url, UriKind.Absolute, out Uri? uri);
-            if (isNotAbsolutUrl)
+            var isAbsoultUrl = Uri.TryCreate(url, UriKind.Absolute, out Uri? uri);
+            if (!isAbsoultUrl)
             {
                 Uri.TryCreate(new Uri(@"https://" + baseUrl), url, out uri);
             }

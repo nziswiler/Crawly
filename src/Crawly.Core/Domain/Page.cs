@@ -5,8 +5,8 @@
         public Page (Uri uri, string topLevelFolder)
         {
             this.Uri = uri;
-            var folderPath = Path.Combine(topLevelFolder, getRelativPath() ?? topLevelFolder);
-            this.Location = Path.Combine(folderPath, generateFileName());
+            var folderPath = Path.Combine(topLevelFolder, GetRelativPath() ?? topLevelFolder);
+            this.Location = Path.Combine(folderPath, GenerateFileName());
         }
 
         public Uri Uri { get; private set; }
@@ -15,12 +15,12 @@
 
         public string Location { get; private set; }
 
-        private string generateFileName()
+        private string GenerateFileName()
         {
             var name = this.Uri.Segments.Last();
             if (string.IsNullOrEmpty(name) || name.Equals("/"))
             {
-                name = Constants.FileNames.INDEX;
+                name = Constants.FileNames.Index;
             }
 
             if (name.EndsWith("/"))
@@ -28,15 +28,15 @@
                 name = name.Remove(name.Length - 1, 1);
             }
 
-            if (!name.EndsWith(Constants.UrlFragments.HTML))
+            if (!name.EndsWith(Constants.UrlFragments.Html))
             {
-                name += Constants.UrlFragments.HTML;
+                name += Constants.UrlFragments.Html;
             }
 
             return name;
         }
 
-        private string? getRelativPath()
+        private string? GetRelativPath()
         {
             if (this.Uri.Segments.Count() > 2) 
             {
