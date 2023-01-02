@@ -25,7 +25,7 @@
 
         public bool IsExportExternalLiksActiv { get; private set; }
 
-        public void DowloadFullPageRecusivly()
+        public void ConfigureFullPageDownload()
         {
             this.Configure(isHtmlDownloadActiv: true,
                 isRecurisvCrawlingActiv: true,
@@ -37,7 +37,7 @@
                 isExportExternalLiksActiv: false);
         }
 
-        public void DowonloadHtmlFilesRecursivly()
+        public void ConfigureHtmlOnlyDownloadRecursivly()
         {
             this.Configure(isHtmlDownloadActiv: true,
                 isRecurisvCrawlingActiv: true,
@@ -49,7 +49,7 @@
                 isExportExternalLiksActiv: false);
         }
 
-        public void DowloadFullPageSingle()
+        public void ConfigureSinglePageDownload()
         {
             this.Configure(isHtmlDownloadActiv: true,
                 isRecurisvCrawlingActiv: false,
@@ -61,10 +61,10 @@
                 isExportExternalLiksActiv: false);
         }
 
-        public void DownloadImagesSingle()
+        public void ConfigureImagesOnlyDownload()
         {
             this.Configure(isHtmlDownloadActiv: false,
-                isRecurisvCrawlingActiv: true,
+                isRecurisvCrawlingActiv: false,
                 isImageCrawlingActiv: true,
                 isImageDownloadActiv: true,
                 isStylesheetCrawlingActiv: false,
@@ -72,7 +72,7 @@
                 isExportPageStatisticsActiv: false,
                 isExportExternalLiksActiv: false);
         }
-        public void DownloadStylesheetSingle()
+        public void ConfigureStylesheetsOnlyDownload()
         {
             this.Configure(isHtmlDownloadActiv: false,
                 isRecurisvCrawlingActiv: false,
@@ -84,7 +84,7 @@
                 isExportExternalLiksActiv: false);
         }
 
-        public void ExportPageStatistics()
+        public void ConfigurePageStatisticsExport()
         {
             this.Configure(isHtmlDownloadActiv: false,
                 isRecurisvCrawlingActiv: true,
@@ -96,7 +96,7 @@
                 isExportExternalLiksActiv: false);
         }
 
-        public void ExportExternalLinks()
+        public void ConfigureExternalLinksExport()
         {
             this.Configure(isHtmlDownloadActiv: false,
                 isRecurisvCrawlingActiv: true,

@@ -76,23 +76,23 @@ namespace Crawly.UI.CommandLine.Controller
 
             if (menuPoint == 1)
             {
-                crawlingOptions?.DowloadFullPageRecusivly();
+                crawlingOptions?.ConfigureFullPageDownload();
             }
             else if (menuPoint == 2)
             {
-                crawlingOptions?.DowonloadHtmlFilesRecursivly();
+                crawlingOptions?.ConfigureHtmlOnlyDownloadRecursivly();
             }
             else if (menuPoint == 3)
             {
-                crawlingOptions?.DowloadFullPageSingle();
+                crawlingOptions?.ConfigureSinglePageDownload();
             }
             else if (menuPoint == 4)
             {
-                crawlingOptions?.DownloadImagesSingle();
+                crawlingOptions?.ConfigureImagesOnlyDownload();
             }
             else
             {
-                crawlingOptions?.DownloadStylesheetSingle();
+                crawlingOptions?.ConfigureStylesheetsOnlyDownload();
             }
 
             this.StartCrawling();
@@ -119,11 +119,11 @@ namespace Crawly.UI.CommandLine.Controller
 
             if (menuPoint == 1)
             {
-                crawlingOptions?.ExportPageStatistics();
+                crawlingOptions?.ConfigurePageStatisticsExport();
             }
             else
             {
-                crawlingOptions?.ExportExternalLinks();
+                crawlingOptions?.ConfigureExternalLinksExport();
             }
 
             this.StartCrawling();
